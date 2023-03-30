@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load myfilter %}
+{% load static %}
+
+<div class="container w-75 p-3 bg-light">
+    
+    <div class="row>
+        <div class="col-12">
+            <div class="title">PERSONAL DATA UPDATE FORM !</div>
+            {% if messages %}
+            {% for message in messages %}
+             <h5 class="msg {{message.tags}}">{{message}}</h5>
+            {% endfor %}
+            {% endif %}
+            <div class="content">
+                <form action="{% url 'postpersonalupdate' %}"  method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for fm in forms %}
+                    <div class="form-group">
+                        {{fm.label_tag}}
+                        {{fm}}
+                        {% if fm.errors %}
+                        {% for error in fm.errors %}
+                        <span class="text-danger">{{error}}</span>
+                        {% endfor %}
+                        {% else %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <button class="btn btn-success col-12" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+    
+{% endblock content %}

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load myfilter %}
+{% load static %}
+
+<div class="container w-75 p-3 bg-light">
+    <div class="row">
+        <div class="col-8">
+            {% if messages %}
+            {% for message in messages %}
+            <h5 class="msg {{message.tags}}">{{message}}</h5>
+            {% endfor %}
+            {% endif %}
+            <p class="font-weight-bold" id="myname">{{profiles.name}}</p>
+            <p class="font-weight-bold"><i class="fab fa-connectdevelop"></i>{{profiles.title}}</p>
+            <p><i class="fas fa-phone-square"></i><span>Contact No : </span>{{profiles.phone}}</p>
+            <p><i class="fas fa-envelope"></i><span>Email : </span>{{profiles.email}}</p>
+            <p><i class="fab fa-linkedin-in"></i>
+                <span>
+                    LinkedIn :{% if links.linkin %} <a class="text-dark" href="{{links.linkin}}" target="_blank" >{{links.linkin}}</a> {% endif %}
+                </span>
+            </p>
+            <p><i class="fab fa-github"></i><span>Github link : {% if links.git_link %} <a class="text-dark" href="{{links.git_link}}" target="_blank" >{{links.git_link}}</a> {% endif %} </span></p>
+            <p><i class="fas fa-id-card-alt"></i><span>Website : {% if links.wb_link %} <a class="text-dark" href="{{links.wb_link}}" target="_blank" >{{links.wb_link}}</a> {% endif %} </span></p>
+        </div>
+        <div class="col-4 text-center">
+            {% if profiles.photo %}
+            <img src="{{profiles.photo.url}}" alt="Photo" id="photo">
+            {% else %}
+            <img src="{% static 'image/default.jpg' %}" alt="Photo" id="photo">
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <div class="title">CAREER & OBJECTIVE</div>
+            <div class="content">
+                {{profiles.career}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="title"><i class="fas fa-university"></i>EDUCATIONAL DETAILS</div>
+            <div class="content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sno.</th>
+                            <th scope="col">Degree</th>
+                            <th scope="col">University/Board</th>
+                            <th scope="col">Passing Year</th>
+                            <th scope="col">Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for qul in qualifications %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{qul.degree}}</td>
+                            <td>{{qul.university}}</td>
+                            <td>{{qul.pass_out}}</td>
+                            <td>{{qul.percentage|getformat}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="title"><i class="fas fa-cogs"></i>TECHNICAL SKILLS</div>
+            <div class="content">
+                <ul>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Databases : </span>{{techskills.database}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Programming languages :
+                        </span>{{techskills.language}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Frameworks : </span>{{techskills.framework}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Web technologies :
+                        </span>{{techskills.web_technology}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="title"><i class="fas fa-people-arrows"></i>PERSONAL DETAILS</div>
+            <div class="content">
+                <ul>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Father's Name :
+                        </span>{{personaldata.father_name}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Mother's Name :
+                        </span>{{personaldata.mother_name}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Permanent address :
+                        </span>{{personaldata.permanent_address}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Date of birth :
+                        </span>{{personaldata.dob|date:"d-M-Y"}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Known languages :
+                        </span>{{personaldata.language}}</li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Nationality : </span>{{personaldata.nationality}}
+                    </li>
+                    <li><i class="fas fa-arrow-circle-right"></i><span>Hobbies : </span>{{personaldata.hobby}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="title">DECLARATION</div>
+            <div class="content">
+                {{personaldata.declare}}
+                <div class="signature">
+                    <span>{{profiles.name}}</span> <br>
+                    Signature
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
